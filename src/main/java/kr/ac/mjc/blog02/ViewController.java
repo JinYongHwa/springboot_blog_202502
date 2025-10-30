@@ -69,4 +69,12 @@ public class ViewController {
         return "redirect:/view/article/"+article.getNo();
     }
 
+    @GetMapping("/join")
+    public String join(){
+        return "join";
+    }
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
 }
