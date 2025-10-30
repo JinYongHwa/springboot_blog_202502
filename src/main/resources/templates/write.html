@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <form action="/article/write" method="post" class="form">
+            <input type="text" name="title" class="form-control mb-2" placeholder="글제목">
+            <textarea name="body" cols="30" rows="10" class="form-control" placeholder="글내용"></textarea>
+            <div class="text-center">
+                <input type="submit" value="글작성" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

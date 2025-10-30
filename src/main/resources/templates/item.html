@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        h1{
+            font-size:24px;
+            padding-bottom:8px;
+            margin-bottom:16px;
+            border-bottom:1px solid #eee;
+        }
+        .write-date{
+            text-align:right;
+            font-size:20px;
+            color:#999;
+        }
+        p{
+            min-height:400px;
+            background:#eee;
+            padding:16px;
+            font-size:18px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${article.title}"></h1>
+        <div class="write-date" th:text="${article.formatWriteDate}"></div>
+        <p th:text="${article.body}"></p>
+        <div class="text-center">
+            <a href="/write" class="btn btn-primary">글쓰기</a>
+            <a href="/" class="btn btn-primary">글목록</a>
+            <a th:href="@{ /article/modify/{no} (no=${article.no}) }" class="btn btn-secondary">글수정</a>
+            <a th:href="@{ /article/delete/{no} (no=${article.no}) }" class="btn btn-danger">글삭제</a>
+        </div>
+    </div>
+
+</body>
+</html>
