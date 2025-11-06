@@ -1,5 +1,7 @@
 package kr.ac.mjc.blog02;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -25,6 +27,11 @@ public class Article {
     @CreatedDate
     @Column(name="write_date")
     private LocalDateTime writeDate;    //글작성시간
+
+
+    //작성자
+    @ManyToOne
+    private User writeUser;
 
     public int getNo() {
         return no;
@@ -63,5 +70,13 @@ public class Article {
             return "";
         }
         return writeDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    public User getWriteUser() {
+        return writeUser;
+    }
+
+    public void setWriteUser(User writeUser) {
+        this.writeUser = writeUser;
     }
 }

@@ -1,5 +1,6 @@
 package kr.ac.mjc.blog02;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     @PostMapping("/article")
-    public ResponseEntity<ArticleResponse> saveArticle(@RequestBody Article article){
+    public ResponseEntity<ArticleResponse> saveArticle(@RequestBody Article article, HttpSession session){
         //데이터베이스에 값을 저장한다
         Article savedArticle=articleService.saveArticle(article);
         

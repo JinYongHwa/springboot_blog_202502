@@ -9,6 +9,10 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    public User getUser(String email){
+        return userRepository.findOneByEmail(email);
+    }
     
     //회원가입
     public UserResponseDto join(User user){

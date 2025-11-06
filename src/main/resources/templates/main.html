@@ -23,8 +23,10 @@
 <body>
     <div class="container">
         <div class="text-right">
-            <a href="/write" class="btn btn-primary">글쓰기</a>
-            <a href="/login" class="btn btn-primary">로그인</a>
+            <span th:if="${loginUser!=null}" th:text="${loginUser.email}"></span>
+            <a th:if="${loginUser!=null}" href="/write" class="btn btn-primary">글쓰기</a>
+            <a th:if="${loginUser==null}" href="/login" class="btn btn-primary">로그인</a>
+            <a th:if="${loginUser!=null}" href="/logout" class="btn btn-primary">로그아웃</a>
         </div>
         <div class="article" th:each="article : ${articleList}">
             <a th:href=" @{ /view/article/{no} (no=${article.no}) } ">

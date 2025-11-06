@@ -1,17 +1,19 @@
 package kr.ac.mjc.blog02;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name="email")
@@ -23,6 +25,7 @@ public class User {
     @CreatedDate
     @Column(name="join_date")
     private LocalDateTime joinDate;     //가입일자
+
 
     public String getEmail() {
         return email;
@@ -55,4 +58,5 @@ public class User {
     public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
     }
+
 }

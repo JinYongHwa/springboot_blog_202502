@@ -1,5 +1,6 @@
 package kr.ac.mjc.blog02;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,21 @@ public class ViewController {
     @Autowired
     ArticleService articleService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/")
-    public ModelAndView main(){
+    public ModelAndView main(HttpSession session){
         List<Article> articleList=articleService.getArticleList();
         ModelAndView mav=new ModelAndView();
         mav.addObject("articleList",articleList);
         mav.setViewName("main");
+
+        User user=(User)session.getAttribute("loginUser");
+        if(user!=null){     //로그인이 되어있을경우
+            mav.addObject("loginUser",user);
+        }
+
         return mav;
     }
 
@@ -41,10 +51,16 @@ public class ViewController {
     }
 
     @PostMapping("/article/write")
-    public String articleWrite(@ModelAttribute ArticleDto articleDto){
+    public String articleWrite(@ModelAttribute ArticleDto articleDto,HttpSession session){
         Article article=new Article();
         article.setTitle(articleDto.getTitle());
         article.setBody(articleDto.getBody());
+
+        //세션에 저장된 사용자 정보가 작성자가 되도록 설정하기
+        User user=(User)session.getAttribute("loginUser");
+        User dbUser=userService.getUser(user.getEmail());
+        article.setWriteUser(dbUser);
+
         Article savedArticle=articleService.saveArticle(article);
         return "redirect:/view/article/"+savedArticle.getNo();
     }
@@ -76,5 +92,11 @@ public class ViewController {
     @GetMapping("/login")
     public String login(){
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("loginUser");
+        return "redirect:/";
     }
 }
