@@ -18,6 +18,13 @@
         a:hover{
             color:red;
         }
+        .category{
+            color:#ff0000;
+            background:#ff000055;
+            padding: 8px 16px;
+            border-radius:8px;
+            display:inline-block;
+        }
     </style>
 </head>
 <body>
@@ -32,8 +39,11 @@
             <a th:href=" @{ /view/article/{no} (no=${article.no}) } ">
                 <h2 th:text="${article.title}">블로그 글 제목이 나올곳</h2>
             </a>
-
             <div class="write-date" th:text="${article.formatWriteDate}">2025-10-16</div>
+            <div th:if="${article.writeUser!=null}"
+                 th:text="${article.writeUser.name}"></div>
+            <div class="category" th:each="category : ${article.categoryList}"
+                 th:text="${category.name}"></div>
         </div>
     </div>
 </body>

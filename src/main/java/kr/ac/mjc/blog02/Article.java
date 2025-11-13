@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -32,6 +33,16 @@ public class Article {
     //작성자
     @ManyToOne
     private User writeUser;
+
+    @ManyToMany  //N:M
+    @JoinTable(
+            name="article_category",
+            joinColumns = @JoinColumn(name = "article_id"),
+            inverseJoinColumns = @JoinColumn(name="category_id")
+    )
+    private List<Category> categoryList;
+
+    private List<Integer> categoryIds;
 
     public int getNo() {
         return no;
@@ -78,5 +89,21 @@ public class Article {
 
     public void setWriteUser(User writeUser) {
         this.writeUser = writeUser;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
+
+    public List<Integer> getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(List<Integer> categoryIds) {
+        this.categoryIds = categoryIds;
     }
 }

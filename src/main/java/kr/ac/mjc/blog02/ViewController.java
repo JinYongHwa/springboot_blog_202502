@@ -20,6 +20,9 @@ public class ViewController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CategoryService categoryService;
+
     @GetMapping("/")
     public ModelAndView main(HttpSession session){
         List<Article> articleList=articleService.getArticleList();
@@ -46,8 +49,12 @@ public class ViewController {
     }
 
     @GetMapping("/write")
-    public String write(){
-        return "write";
+    public ModelAndView write(){
+        ModelAndView mav=new ModelAndView();
+        mav.setViewName("write");
+        List<Category> categoryList=categoryService.getCategoryList();
+        mav.addObject("categoryList",categoryList);
+        return mav;
     }
 
     @PostMapping("/article/write")
@@ -55,6 +62,7 @@ public class ViewController {
         Article article=new Article();
         article.setTitle(articleDto.getTitle());
         article.setBody(articleDto.getBody());
+        article.setCategoryIds(articleDto.getCategoryIds());
 
         //세션에 저장된 사용자 정보가 작성자가 되도록 설정하기
         User user=(User)session.getAttribute("loginUser");

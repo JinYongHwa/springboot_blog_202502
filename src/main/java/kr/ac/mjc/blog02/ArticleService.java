@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -12,7 +13,18 @@ public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     public Article saveArticle(Article article){
+
+        List<Category> categoryList=new ArrayList<>();
+        for(int categoryId : article.getCategoryIds()){
+            Category category=categoryRepository.findById(categoryId).get();
+            categoryList.add(category);
+        }
+        article.setCategoryList(categoryList);
+
         Article savedArticle=articleRepository.save(article);
         return savedArticle;
     }
@@ -29,7 +41,7 @@ public class ArticleService {
     }
 
     public List<Article> getArticleList(){
-        List<Article> articleList=articleRepository.findAll();
+        List<Article> articleList=articleRepository.findAllByOrderByWriteDateDesc();
         return articleList;
     }
 
